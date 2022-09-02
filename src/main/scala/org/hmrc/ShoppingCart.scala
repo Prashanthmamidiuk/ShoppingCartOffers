@@ -3,8 +3,7 @@ package org.hmrc
 class ShoppingCart {
   def checkout(shoppingList: List[String]) : String = {
     val totalCost = shoppingList.map(getPrice).sum.toDouble
-    val cheapestOffer = cheapestFreeOffer(shoppingList)
-    val offers = cheapestOffer + offerPriceFor(shoppingList, "Orange", 3)
+    val offers = cheapestFreeOffer(shoppingList) + offerPriceForOrange(shoppingList)
 
     s"£${(totalCost - offers) / 100}"
   }
@@ -18,9 +17,9 @@ class ShoppingCart {
     }
   }
 
-  private def offerPriceFor(shoppingList: List[String], fruitType: String, offer: Int) = {
-    val fruitCount = shoppingList.count(_ == fruitType)
-    (fruitCount / offer) * getPrice(fruitType)
+  private def offerPriceForOrange(shoppingList: List[String]) = {
+    val fruitCount = shoppingList.count(_ == "Orange")
+    (fruitCount / 3) * getPrice("Orange")
   }
 
   private def cheapestFreeOffer(shoppingList: List[String]) = {
